@@ -8,20 +8,36 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 const MaterialModules = [
   LayoutModule,
+  MatFormFieldModule,
   MatToolbarModule,
   MatButtonModule,
   MatSidenavModule,
   MatIconModule,
   MatListModule,
-  MatCardModule
+  MatCardModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatGridListModule,
+  MatMenuModule,
+  MatInputModule,
+  MatToolbarModule,
+  MatExpansionModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, MaterialModules],
-  exports: [MaterialModules]
+  exports: [MaterialModules],
 })
 export class MaterialModule {}

@@ -3,27 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { NavComponent } from './components/nav/nav.component';
-import { MaterialModule } from '../pages/material/material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { LayoutModule } from '@angular/cdk/layout';
+import { SharedModule } from '../shared/shared.module';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [NavComponent, DashboardComponent],
+  declarations: [NavComponent, DashboardComponent, SidebarComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MaterialModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    LayoutModule,
+    SharedModule
   ],
 })
 export class AdminModule { }

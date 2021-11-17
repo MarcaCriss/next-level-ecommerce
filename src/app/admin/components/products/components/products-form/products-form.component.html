@@ -1,1 +1,39 @@
-<p>products-form works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> {{ titleForm }} </mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="form" (submit)="createProduct()">
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" formControlName="name" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Descripcion</mat-label>
+          <input matInput type="text" formControlName="description" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Precio</mat-label>
+          <input matInput type="number" formControlName="price" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Stock</mat-label>
+          <input matInput type="number" formControlName="stock" />
+        </mat-form-field>
+        <br />
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary">
+          {{ buttonForm }} producto
+        </button>
+        <button type="button" mat-raised-button (click)="cancel()">
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
