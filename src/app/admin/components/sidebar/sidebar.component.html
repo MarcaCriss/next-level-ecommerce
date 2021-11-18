@@ -1,8 +1,6 @@
 <mat-accordion>
-  <mat-expansion-panel
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
-  >
+
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title> Productos </mat-panel-title>
     </mat-expansion-panel-header>
@@ -10,6 +8,17 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['./products']">Listar productos</a>
       <a mat-list-item [routerLink]="['./products/create']">Crear producto</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Categorias </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['./categories']">Listar categorias</a>
+      <a mat-list-item [routerLink]="['./categories/create']">Crear categoria</a>
     </mat-nav-list>
   </mat-expansion-panel>
 

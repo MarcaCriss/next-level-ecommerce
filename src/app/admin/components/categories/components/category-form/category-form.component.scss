@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 20rem;
+  text-align: center;
+  mat-card-header {
+    justify-content: center;
+    text-align: center;
+  }
+  mat-card-content {
+    width: 100%;
+    mat-form-field {
+      width: 95%;
+    }
+  }
+}
+
+.image-thumb img {
+  width: 100%;
+}

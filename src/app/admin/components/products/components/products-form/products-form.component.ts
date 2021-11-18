@@ -76,7 +76,18 @@ export class ProductsFormComponent implements OnInit {
       });
   }
 
-  updateProduct(id: string) {}
+  updateProduct(id: string) {
+    this.productsService.updateProduct(parseInt(id), this.form.value).subscribe(
+      (data) => {
+        this.photo.get('productId')?.setValue(parseInt(id));
+        this.photoService.create(this.photo.value).subscribe(
+          (data) => {
+            this.router.navigate(['./admin/products']);
+          }
+        )
+      }
+    )
+  }
 
   isEdit() {
     if (this.id !== null) {
