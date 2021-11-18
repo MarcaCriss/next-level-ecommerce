@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
-import { Product } from '../../../../../shared/interfaces/product.interface';
+import { Product } from '../../../../../shared/interfaces/interfaces';
 import { ProductsService } from '../../../../../shared/services/products.service';
 
 @Component({

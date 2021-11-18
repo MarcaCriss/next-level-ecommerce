@@ -11,4 +11,14 @@ mat-card {
     justify-content: center;
     text-align: center;
   }
+  mat-card-content {
+    width: 100%;
+    mat-form-field {
+      width: 95%;
+    }
+  }
+}
+
+.image-thumb img {
+  width: 100%;
 }

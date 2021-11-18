@@ -15,6 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 
 const MaterialModules = [
@@ -33,6 +34,7 @@ const MaterialModules = [
   MatInputModule,
   MatToolbarModule,
   MatExpansionModule,
+  MatSelectModule
 ];
 
 @NgModule({

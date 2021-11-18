@@ -25,9 +25,28 @@
           <input matInput type="number" formControlName="stock" />
         </mat-form-field>
         <br />
+        <mat-form-field appearance="standard">
+          <mat-label>Categorias</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+              {{ category.name }}
+              </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <div class="image-thumb" *ngIf="!edit">
+          <img src="{{ url+'photo/'+photo.get('name')?.value }}" alt="imagen" *ngIf="photo.get('name')?.value" />
+      </div>
+        <input type="file" (change)="uploadFile($event)" [disabled]="form.invalid">
+        <br />
       </mat-card-content>
       <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+
+        >
           {{ buttonForm }} producto
         </button>
         <button type="button" mat-raised-button (click)="cancel()">

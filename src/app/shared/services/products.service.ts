@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Product } from '../interfaces/product.interface';
+import { Product } from '../interfaces/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,6 +19,6 @@ export class ProductsService {
     return this._http.get<Product>(`${environment.urlBase}products/${id}`);
   }
   createProduct(product: Product): Observable<Product> {
-    return this._http.post<Product>(`${environment.urlBase}products/create`, product);
+    return this._http.post<Product>(`${environment.urlBase}products`, product);
   }
 }
