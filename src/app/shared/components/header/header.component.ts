@@ -1,28 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Category } from '../../interfaces/interfaces';
 import { CategoriesService } from './../../services/categories.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   categories!: Category[];
+  total$!: Observable<number>;
 
-  constructor(private categoriesService: CategoriesService) { }
+  constructor(
+    private categoriesService: CategoriesService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.categoriesService.getAllCategories().subscribe(
-      (data) => {
-        this.categories = data;
-      }
+    this.categoriesService.getAllCategories().subscribe((data) => {
+      this.categories = data;
+    });
+    this.total$ = this.cartService.cart$.pipe(
+      map(products => products.length)
     );
-  }
-
-  getOneCategory() {
-    console.log("hola mundo");
   }
 
 }

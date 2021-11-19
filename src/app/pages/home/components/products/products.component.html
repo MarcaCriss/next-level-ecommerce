@@ -11,9 +11,6 @@
             [alt]="product.name"
           />
         </a>
-        <div class="label-top shadow-sm">
-          <a class="text-white" href="#">asus</a>
-        </div>
         <div class="card-body">
           <div class="clearfix mb-3">
             <span class="float-start badge rounded-pill bg-success"
@@ -23,6 +20,13 @@
                 {{ product.name | titlecase }}
             </span>
           </div>
+
+          <div class="clearfix mb-1">
+            <span class="float-end">
+              <i class="far fa-heart" style="cursor: pointer"></i>
+            </span>
+          </div>
+
           <h5 class="card-title">
             <a target="_blank" href="#">
               {{ product.description }}
@@ -30,13 +34,11 @@
           </h5>
 
           <div class="d-grid gap-2 my-4">
-            <a href="#" class="btn btn-warning bold-btn">Añadir al carrito</a>
+            <a (click)="addCart(product)" class="btn btn-warning bold-btn">
+              Añadir al carrito
+            </a>
           </div>
-          <div class="clearfix mb-1">
-            <span class="float-end">
-              <i class="far fa-heart" style="cursor: pointer"></i>
-            </span>
-          </div>
+
         </div>
       </div>
     </div>

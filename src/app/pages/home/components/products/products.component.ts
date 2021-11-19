@@ -5,6 +5,7 @@ import { environment } from '../../../../../environments/environment.prod';
 import { Product, Category } from '../../../../shared/interfaces/interfaces';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CategoriesService } from '../../../../shared/services/categories.service';
+import { CartService } from '../../../../shared/services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -20,6 +21,7 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
     private activatedRoute: ActivatedRoute,
+    private cartService: CartService
   ) {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
@@ -35,6 +37,10 @@ export class ProductsComponent implements OnInit {
     this.productsService.getAllProducts().subscribe((data) => {
       this.products = data;
     });
+  }
+
+  addCart(product: Product) {
+    this.cartService.addCart(product);
   }
 
   getProductsByCategory() {
