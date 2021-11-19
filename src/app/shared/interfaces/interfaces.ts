@@ -5,6 +5,7 @@ export interface Product {
   price: number;
   stock: number;
   category: Category;
+  photos?: Photo[]
 }
 
 export interface Category {

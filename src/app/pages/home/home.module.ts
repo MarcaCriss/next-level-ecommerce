@@ -15,7 +15,7 @@ import { ProductsComponent } from './components/products/products.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class HomeModule { }

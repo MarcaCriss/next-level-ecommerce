@@ -1,3 +1,46 @@
 <app-header></app-header>
-  <p>products works!</p>
+
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
+  <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+    <div class="col hp" *ngFor="let product of products">
+      <div class="card h-100 shadow-sm">
+        <a *ngIf="product.photos">
+          <img
+            src="{{ url + 'photo/' + product.photos[0].name }}"
+            class="card-img-top"
+            [alt]="product.name"
+          />
+        </a>
+        <div class="label-top shadow-sm">
+          <a class="text-white" href="#">asus</a>
+        </div>
+        <div class="card-body">
+          <div class="clearfix mb-3">
+            <span class="float-start badge rounded-pill bg-success"
+              >{{ product.price }} Bs</span
+            >
+            <span class="float-end">
+                {{ product.name | titlecase }}
+            </span>
+          </div>
+          <h5 class="card-title">
+            <a target="_blank" href="#">
+              {{ product.description }}
+            </a>
+          </h5>
+
+          <div class="d-grid gap-2 my-4">
+            <a href="#" class="btn btn-warning bold-btn">Añadir al carrito</a>
+          </div>
+          <div class="clearfix mb-1">
+            <span class="float-end">
+              <i class="far fa-heart" style="cursor: pointer"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <app-footer></app-footer>
