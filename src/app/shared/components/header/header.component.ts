@@ -9,12 +9,20 @@ import { CategoriesService } from './../../services/categories.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  categories$!: Observable<Category[]>
+  categories!: Category[];
 
   constructor(private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
-    this.categories$ = this.categoriesService.getAllCategories();
+    this.categoriesService.getAllCategories().subscribe(
+      (data) => {
+        this.categories = data;
+      }
+    );
+  }
+
+  getOneCategory() {
+    console.log("hola mundo");
   }
 
 }

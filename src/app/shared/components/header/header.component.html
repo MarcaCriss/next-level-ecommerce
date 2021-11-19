@@ -1,18 +1,29 @@
 <header id="masthead" class="site-header">
   <div class="site-branding">
-    <h1 class="site-title"><a href="index.html" rel="home">Moschino</a></h1>
-    <h2 class="site-description">Minimalist Portfolio HTML Template</h2>
+    <h1 class="site-title">
+      <a href="index.html" rel="home">
+        Next Level
+      </a>
+    </h1>
+    <h2 class="site-description">
+      Venta de productos informaticos
+    </h2>
   </div>
   <nav id="site-navigation" class="main-navigation">
-  <button class="menu-toggle">Menu</button>
-  <div class="menu-menu-1-container">
-    <ul id="menu-menu-1" class="menu">
-      <li *ngFor="let category of categories$ | async">
-        <a href="index.html">
-          {{ category.name }}
-        </a>
-      </li>
-    </ul>
-  </div>
+    <button class="menu-toggle">Menu</button>
+    <div class="menu-menu-1-container">
+      <ul id="menu-menu-1" class="menu">
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/products']">
+            Todos
+          </a>
+        </li>
+        <li *ngFor="let category of categories">
+          <a routerLinkActive="active" [routerLink]="['/categories', category.id]">
+            {{ category.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
-  </header>
+</header>

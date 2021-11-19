@@ -10,6 +10,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'products',
+        pathMatch: 'full',
+      },
+      {
+        path: 'products',
+        component: ProductsComponent
+      },
+      {
+        path: 'categories/:id',
         component: ProductsComponent
       }
     ]
