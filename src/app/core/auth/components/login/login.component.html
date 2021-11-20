@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header class="example-card-header">
+      <mat-card-title>Inicio de Sesion</mat-card-title>
+      <mat-card-subtitle>
+        Ingrese sus credenciales de acceso para ingresar al sistema
+      </mat-card-subtitle>
+    </mat-card-header>
+    <form [formGroup]="form" (submit)="login()">
+      <mat-card-content>
+        <mat-form-field appearance="standard" class="example-full-width">
+          <mat-label>Email </mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="example@example.com"
+            formControlName="email"
+          />
+          <mat-error *ngIf="emailNoValido">El email es requerido</mat-error>
+          <mat-error *ngIf="emailInvalid">El email es invalido</mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="standard" class="example-full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="***********"
+            type="password"
+            autocomplete="on"
+            formControlName="password"
+          />
+          <mat-error *ngIf="passwordNoValido"
+            >El password es requerido</mat-error
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Login
+        </button>
+        <!-- <button mat-raised-button>Registrarse</button> -->
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

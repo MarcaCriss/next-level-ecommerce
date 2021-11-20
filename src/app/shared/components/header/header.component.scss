@@ -63,6 +63,7 @@ a:active, a:focus {
 .menu {
 	display:table;
 	margin:0 auto;
+	max-width: 1200px;
 }
 .main-navigation {
 	background-color:#fff;
@@ -87,6 +88,7 @@ a:active, a:focus {
 	float:left;
 	margin:0 1em;
 	position:relative;
+	margin-bottom: 1rem;
 }
 .main-navigation ul ul {
 	display:none;
@@ -163,7 +165,7 @@ a:active, a:focus {
   color: white;
   background-color: #333333;
 }
-
+/*
 .site-branding {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -176,6 +178,7 @@ a:active, a:focus {
 .site-branding .sidebar-social {
 	justify-self: flex-end;
 }
+*/
 
 .sidebar-social li {
   text-align: center;
@@ -191,7 +194,7 @@ a:active, a:focus {
 	display: flex;
 	align-items: center;
   margin: 0 auto 10px auto;
-  width: 62px;
+  width: 30px;
   height: 65px;
   margin: 10px auto 0;
   line-height: 32px;
@@ -219,10 +222,4 @@ a:active, a:focus {
   align-items: center;
   color: white;
   padding: 2px;
-}
-
-@media (max-width: 1080px) {
-	.main-navigation li {
-		margin-bottom: 1rem;
-	}
 }

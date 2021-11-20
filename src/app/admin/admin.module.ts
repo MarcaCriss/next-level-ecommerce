@@ -6,6 +6,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [NavComponent, DashboardComponent, SidebarComponent],
@@ -14,5 +15,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AdminRoutingModule,
     SharedModule
   ],
+  providers: [CookieService]
 })
 export class AdminModule { }

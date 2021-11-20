@@ -6,16 +6,12 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SharedModule } from '../../shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    HomeComponent,
-    ProductsComponent,
-  ],
+  declarations: [HomeComponent, ProductsComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

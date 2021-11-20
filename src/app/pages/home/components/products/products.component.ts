@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ProductsService } from '../../../../shared/services/products.service';
 import { environment } from '../../../../../environments/environment.prod';
@@ -21,7 +21,7 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
     private activatedRoute: ActivatedRoute,
-    private cartService: CartService
+    private cartService: CartService,
   ) {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
@@ -49,7 +49,6 @@ export class ProductsComponent implements OnInit {
     } else {
       this.categoriesService.getCategory(parseInt(this.id)).subscribe(
         (data: Category) => {
-          console.log(data);
           if (data.products) {
             this.products = data.products;
           }

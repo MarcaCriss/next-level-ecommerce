@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+}
+
+.example-card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-card-title {
+  text-align: center;
+}
+
+mat-card-subtitle {
+  text-align: center;
+}

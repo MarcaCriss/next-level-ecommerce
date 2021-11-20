@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from '../../../core/auth/services/token.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
   panelOpenState = false;
-  constructor() { }
+
+  constructor(private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.tokenService.removeToken();
+    this.router.navigate(['/auth/login']);
   }
 
 }

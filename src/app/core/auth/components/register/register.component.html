@@ -1,0 +1,106 @@
+<mat-card class="example-card">
+  <mat-card-header class="example-card-header">
+    <div>
+      <mat-card-title>Registro</mat-card-title>
+      <mat-card-subtitle>
+        Complete los campos para poder registrarse
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
+  <form [formGroup]="form" (submit)="register()">
+    <mat-card-content>
+      <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Nombre </mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ej. Diego"
+          formControlName="name"
+        />
+        <mat-error *ngIf="nameNoValido">El nombre es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Apellido </mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ej. Perez"
+          formControlName="last_name"
+        />
+        <mat-error *ngIf="lastNameNoValido">El apellido es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Email </mat-label>
+        <input
+          matInput
+          placeholder="example@example.com"
+          autocomplete="email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="emailNoValido">El email es requerido</mat-error>
+        <mat-error *ngIf="emailInvalid">El email es invalido</mat-error>
+      </mat-form-field>
+      <br />
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-form-field appearance="standard" class="example-full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="***********"
+            type="password"
+            autocomplete="new-password"
+            formControlName="password"
+            minlength="8"
+            [type]="hide ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="passwordNoValido"
+            >El password es requerido</mat-error
+          >
+          <mat-error *ngIf="passwordInvalidLength"
+            >La contraseña debe tener como minimo 8 caracteres</mat-error
+          >
+          <mat-error *ngIf="passwordInvalidStrength"
+            >El password es muy <b>debil</b> (debe contener minusculas,
+            mayusculas y numeros)
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-list>
+      <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Confirmar Contraseña</mat-label>
+        <input
+          matInput
+          placeholder="***********"
+          type="password"
+          autocomplete="current-password"
+          formControlName="current_password"
+        />
+        <mat-error *ngIf="currentPasswordNoValido"
+          >La confirmacion de la contraseña es requerido</mat-error
+        >
+        <mat-error *ngIf="currentPasswordInvalid"
+          >Los password no coinciden</mat-error
+        >
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Registrarse
+      </button>
+      <!-- <button mat-raised-button>Registrarse</button> -->
+    </mat-card-actions>
+  </form>
+</mat-card>
