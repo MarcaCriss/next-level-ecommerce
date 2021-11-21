@@ -4,7 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
-import { Product, Photo } from '../../../../../shared/interfaces/interfaces';
+import { Photo } from '../../../../../shared/interfaces/interfaces';
+import { Product } from "../../../../../shared/interfaces/interfaces";
 import { ProductsService } from '../../../../../shared/services/products.service';
 import { PhotoService } from '../../../../../shared/services/photo.service';
 import { environment } from '../../../../../../environments/environment.prod';

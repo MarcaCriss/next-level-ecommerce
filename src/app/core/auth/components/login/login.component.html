@@ -1,9 +1,14 @@
+
 <div class="container">
   <mat-card class="example-card">
     <mat-card-header class="example-card-header">
-      <mat-card-title>Inicio de Sesion</mat-card-title>
+      <br>
+      <mat-card-title>
+        Inicio de Sesion
+        <hr>
+      </mat-card-title>
       <mat-card-subtitle>
-        Ingrese sus credenciales de acceso para ingresar al sistema
+        Ingresa tus credenciales de acceso para ingresar al sistema
       </mat-card-subtitle>
     </mat-card-header>
     <form [formGroup]="form" (submit)="login()">
@@ -43,7 +48,12 @@
         >
           Login
         </button>
-        <!-- <button mat-raised-button>Registrarse</button> -->
+        <br><br>
+        <p>¿No tienes una cuenta? &nbsp;
+          <a class="text-decoration-none" [routerLink]="['/auth/register']">
+            <b>Registrate</b>
+          </a>
+        </p>
       </mat-card-actions>
     </form>
   </mat-card>

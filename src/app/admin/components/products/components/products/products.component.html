@@ -39,8 +39,18 @@
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Imagen</th>
       <td mat-cell *matCellDef="let row">
-        <img src="{{ url + 'photo/' + row.photos[0].name }}" class="img-product"
-        [alt]="row.photos.name" *ngIf="row.photos.length !== 0" />
+        <img
+          src="{{ url + 'photo/' + row.photos[0].name }}"
+          class="img-product"
+          [alt]="row.photos.name"
+          *ngIf="row.photos.length > 0"
+        />
+        <img
+          src="assets/img/not-found.png"
+          class="img-product"
+          [alt]="row.photos.name"
+          *ngIf="row.photos.length === 0"
+        />
       </td>
     </ng-container>
 

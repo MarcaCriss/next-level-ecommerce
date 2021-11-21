@@ -28,25 +28,30 @@
         <mat-form-field appearance="standard">
           <mat-label>Categorias</mat-label>
           <mat-select formControlName="category">
-            <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            <mat-option
+              *ngFor="let category of categories$ | async"
+              [value]="category.id"
+            >
               {{ category.name }}
-              </mat-option>
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <br />
-        <div class="image-thumb" *ngIf="!edit">
-          <img src="{{ url+'photo/'+photo.get('name')?.value }}" alt="imagen" *ngIf="photo.get('name')?.value" />
-      </div>
-        <input type="file" (change)="uploadFile($event)" [disabled]="form.invalid">
+        <img
+          class="image-thumb"
+          src="{{ url + 'photo/' + photo.get('name')?.value }}"
+          alt="imagen"
+          *ngIf="photo.get('name')?.value"
+        />
+        <input
+          type="file"
+          (change)="uploadFile($event)"
+          [disabled]="form.invalid"
+        />
         <br />
       </mat-card-content>
       <mat-card-actions>
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-
-        >
+        <button type="submit" mat-raised-button color="primary">
           {{ buttonForm }} producto
         </button>
         <button type="button" mat-raised-button (click)="cancel()">
@@ -55,4 +60,12 @@
       </mat-card-actions>
     </form>
   </mat-card>
+  <div class="container-img" *ngIf="id !== null">
+    <img
+      *ngFor="let photo of photos"
+      src="{{ url + 'photo/' + photo.name }}"
+      class="container-img__image"
+      alt="image {{ photo.id }}"
+    />
+  </div>
 </div>

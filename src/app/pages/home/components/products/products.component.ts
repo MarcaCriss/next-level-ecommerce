@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ProductsService } from '../../../../shared/services/products.service';
 import { environment } from '../../../../../environments/environment.prod';
-import { Product, Category } from '../../../../shared/interfaces/interfaces';
+import { Category } from '../../../../shared/interfaces/interfaces';
+import { Product } from "../../../../shared/interfaces/interfaces";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CategoriesService } from '../../../../shared/services/categories.service';
 import { CartService } from '../../../../shared/services/cart.service';

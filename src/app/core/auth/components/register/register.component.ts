@@ -26,22 +26,21 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group(
-      {
-        name: new FormControl('', [Validators.required]),
-        last_name: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-          strengthPassword(),
-        ]),
-        current_password: new FormControl('', [Validators.required]),
-        role: new FormControl(['admin'], [Validators.required]),
-      },
-      { validators: confirmedValidator }
-    );
-    console.log(this.form);
+    this.form = this.fb.group({
+      name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        strengthPassword(),
+      ]),
+      current_password: new FormControl('', [
+        Validators.required,
+        confirmedValidator(),
+      ]),
+      role: new FormControl(['admin'], [Validators.required]),
+    });
   }
 
   register() {
@@ -95,7 +94,8 @@ export class RegisterComponent implements OnInit {
   get passwordInvalidStrength() {
     return (
       this.form.get('password')?.errors?.['strength'] &&
-      this.form.get('password')?.touched
+      this.form.get('password')?.touched &&
+      this.form.get('password')?.value.length > 8
     );
   }
 

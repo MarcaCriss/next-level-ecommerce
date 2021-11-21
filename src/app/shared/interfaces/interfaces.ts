@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   stock: number;
   category: Category;
-  photos?: Photo[]
+  photos?: Photo[];
 }
 
 export interface Category {
@@ -17,7 +17,7 @@ export interface Category {
 export interface Photo {
   id?: number;
   name: string;
-  productId: Product;
+  productId?: Product;
 }
 
 export interface PhotoResponse {

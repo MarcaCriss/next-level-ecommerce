@@ -1,0 +1,65 @@
+<ng-container *ngIf="product$ | async as product">
+  <div class="product-grid" *ngIf="product.photos">
+    <div class="c" *ngIf="product.photos.length > 0">
+      <ng-container *ngFor="let photo of product.photos">
+        <input type="radio" name="a" id="cr-{{ photo.id }}" checked />
+        <label for="cr-{{ photo.id }}" style="--hue: 32"></label>
+        <div class="ci" style="--z: 4">
+          <img src="{{ url + 'photo/' + photo.name }}" alt="Snow on leafs" />
+        </div>
+      </ng-container>
+    </div>
+    <div class="c" *ngIf="product.photos.length === 0">
+      <input type="radio" name="a" id="cr-1" checked />
+      <label for="cr-1" style="--hue: 32"></label>
+      <div class="ci" style="--z: 4">
+        <img src="assets/img/not-found.png" alt="Snow on leafs" />
+      </div>
+    </div>
+    <div class="product-detail">
+      <h1>Nombre del producto</h1>
+      <br />
+      <hr />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
+        possimus labore laboriosam alias dicta reiciendis iure maiores, itaque
+        repellendus neque maxime aliquam odio tempora, numquam voluptates
+        asperiores! Veritatis, eaque sit?
+      </p>
+      <hr />
+      <p>
+        Categoria: <b>#{{ product.category.name }}</b>
+      </p>
+      <hr />
+      <div class="d-grid gap-2 my-4">
+        <div class="quantity d-flex items-align-center">
+          <div class="col">
+            Cantidad &nbsp;&nbsp;
+            <input
+              type="number"
+              step="1"
+              min="1"
+              max="{{ product.stock }}"
+              name="quantity"
+              value="1"
+              title="Qty"
+              class="input-text qty text"
+              size="4"
+              (change)="quantity($event)"
+            />
+          </div>
+          <h1 class="col m-0 p-0">
+            <b>{{ product.price }} Bs</b>
+            <br />
+          </h1>
+        </div>
+        <a (click)="addCart(product)" class="btn btn-warning bold-btn mt-2">
+          Añadir al carrito
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div class="products-relations"></div>
+<br />
+<br /><br />

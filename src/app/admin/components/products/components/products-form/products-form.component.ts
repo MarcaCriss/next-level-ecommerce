@@ -11,10 +11,11 @@ import { Observable } from 'rxjs';
 
 
 import { ProductsService } from '../../../../../shared/services/products.service';
-import { Product, Category } from '../../../../../shared/interfaces/interfaces';
+import { Category, Photo } from '../../../../../shared/interfaces/interfaces';
+import { Product } from "../../../../../shared/interfaces/interfaces";
 import { CategoriesService } from './../../../../../shared/services/categories.service';
 import { PhotoService } from '../../../../../shared/services/photo.service';
-import { environment } from '../../../../../../environments/environment.prod';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-products-form',
@@ -30,6 +31,7 @@ export class ProductsFormComponent implements OnInit {
   photo!: FormGroup;
   edit = false;
   url = environment.urlBase;
+  photos!: Photo[];
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +59,7 @@ export class ProductsFormComponent implements OnInit {
     if (file) {
       this.photoService.uploadFile(file).subscribe(
         (data: any) => {
+          this.photos.push({ name: data.filename});
           this.photo.get('name')?.setValue(data.filename);
         }
       )
@@ -97,6 +100,7 @@ export class ProductsFormComponent implements OnInit {
       this.productsService
         .getProduct(parseInt(this.id))
         .subscribe((product: Product) => {
+          this.photos = product.photos!;
           this.form.setValue({
             name: product.name,
             description: product.description,

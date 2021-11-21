@@ -1,7 +1,19 @@
+.container {
+  background-image: url('/assets/img/fondo.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  margin: 0;
+  height: 100vh;
+  max-width: 100%;
+}
+
 .example-card {
+  padding: 2rem 2rem 0 2rem;
   max-width: 400px;
   margin: 0 auto;
-  margin-top: 3rem;
 }
 
 .example-full-width {
@@ -17,4 +29,12 @@
 
 mat-card-subtitle {
   text-align: center;
+}
+
+mat-card-actions {
+  text-align: center;
+  button {
+    width: 150px;
+    border-radius: 10px;
+  }
 }
