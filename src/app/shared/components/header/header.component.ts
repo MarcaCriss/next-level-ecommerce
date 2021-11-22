@@ -23,7 +23,11 @@ export class HeaderComponent implements OnInit {
       this.categories = data;
     });
     this.total$ = this.cartService.cart$.pipe(
-      map(products => products.length)
+      map(products => {
+        let count = 0;
+        products.map( product => { count += product.stock })
+        return count;
+      })
     );
   }
 

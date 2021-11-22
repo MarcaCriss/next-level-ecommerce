@@ -1,33 +1,32 @@
 @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
 
-  $font1: 'Heebo', sans-serif;
-  $font2: 'Fira Sans Extra Condensed', sans-serif;
-  $font3: 'Roboto', sans-serif;
+$font1: "Heebo", sans-serif;
+$font2: "Fira Sans Extra Condensed", sans-serif;
+$font3: "Roboto", sans-serif;
 
-  $btnbg: #666666;
-  $btnfontcolor: white;
-  $btnfontcolorhover: white;
-  $btnbghover: #333333;
-  $btnactivefs: rgb(241, 195, 46);
+$btnbg: #666666;
+$btnfontcolor: white;
+$btnfontcolorhover: white;
+$btnbghover: #333333;
+$btnactivefs: rgb(241, 195, 46);
 
-
-  $label-index: #960796;
-  $danger-index: #5bc257;
+$label-index: #960796;
+$danger-index: #5bc257;
 /* PAGINATE */
-  $link-color: #000;
-  $link-color-hover: #fff;
-  $bg-content-color: #ffcc00;
+$link-color: #000;
+$link-color-hover: #fff;
+$bg-content-color: #ffcc00;
 
 .container-fluid {
   max-width: 1400px;
-
 }
 
 .card {
   background: #fff;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
-  transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
-  border: 0;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s box-shadow,
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
   border-radius: 1rem;
 }
 
@@ -37,7 +36,6 @@
   border-top-right-radius: calc(1rem - 1px);
 }
 
-
 .card h5 {
   overflow: hidden;
   height: 55px;
@@ -46,26 +44,24 @@
 }
 
 .card h5 a {
-color: black;
-text-decoration: none;
-} 
+  color: black;
+  text-decoration: none;
+}
 
 .card-img-top {
   width: 100%;
   min-height: 250px;
   max-height: 250px;
-  object-fit: contain;
-  padding: 30px;
+  object-fit: cover;
 }
 
 .card h2 {
   font-size: 1rem;
 }
 
-
 .card:hover {
   transform: scale(1.02);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
 /* Centered text */
@@ -76,7 +72,7 @@ text-decoration: none;
   top: 8px;
   right: 8px;
   padding: 5px 10px 5px 10px;
-  font-size: .7rem;
+  font-size: 0.7rem;
   font-weight: 600;
   border-radius: 3px;
   text-transform: uppercase;
@@ -113,12 +109,11 @@ text-decoration: none;
 .over-bg {
   background: rgba(53, 53, 53, 0.85);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(0.0px);
-  -webkit-backdrop-filter: blur(0.0px);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   border-radius: 10px;
 }
 .bold-btn {
-
   font-size: 1rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -130,12 +125,12 @@ text-decoration: none;
 
 @media (max-width: 1025px) {
   .btn {
-      padding: 5px 40px 5px 40px;
+    padding: 5px 40px 5px 40px;
   }
 }
 @media (max-width: 250px) {
   .btn {
-      padding: 5px 30px 5px 30px;
+    padding: 5px 30px 5px 30px;
   }
 }
 
@@ -155,7 +150,8 @@ text-decoration: none;
   color: $btnfontcolorhover;
   /* box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35); */
 }
-.btn-check:focus + .btn-warning, .btn-warning:focus {
+.btn-check:focus + .btn-warning,
+.btn-warning:focus {
   background: $btnbghover;
   color: $btnfontcolorhover;
   /* box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35); */
@@ -180,7 +176,6 @@ text-decoration: none;
   font-size: 1rem;
 }
 
-
 .price-hp {
   font-size: 1rem;
   font-weight: 600;
@@ -188,7 +183,7 @@ text-decoration: none;
 }
 
 .amz-hp {
-  font-size: .7rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: darkgray;
 }
@@ -199,7 +194,7 @@ text-decoration: none;
 }
 
 .fa-heart:before {
-  color:crimson;
+  color: crimson;
 }
 .fa-chevron-circle-right:before {
   color: darkgray;

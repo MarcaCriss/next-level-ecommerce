@@ -129,11 +129,13 @@ input:not(:checked) + label + .ci {
 
 .product-detail {
   padding: 5rem 1rem 5rem 1rem;
+
+  h1 {
+    text-align: center;
+  }
+
 }
 
-.product-detail h1 {
-  text-align: center;
-}
 
 .bold-btn {
   font-size: 1rem;

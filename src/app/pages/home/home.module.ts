@@ -6,9 +6,10 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ProductComponent } from './components/product/product.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
-  declarations: [HomeComponent, ProductsComponent, ProductComponent],
+  declarations: [HomeComponent, ProductsComponent, ProductComponent, OrderComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
