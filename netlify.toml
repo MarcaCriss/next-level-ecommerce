@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/rick-and-morty-api"
+  publish = "dist/next-level-ecommerce"
   command = "ng build"
 [[redirects]]
   from = "/*"
