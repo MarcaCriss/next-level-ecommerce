@@ -23,4 +23,19 @@ export class TokenService {
   checkToken() {
     return this.cookieService.check('token');
   }
+
+  setAuthenticate(id: number) {
+    this.cookieService.set('authenticate', JSON.stringify({
+      authenticated: true,
+      id: id
+    }));
+  }
+
+  getAuthenticate() {
+    return this.cookieService.get('authenticate');
+  }
+
+  removeAuthenticate() {
+    this.cookieService.delete('authenticate');
+  }
 }

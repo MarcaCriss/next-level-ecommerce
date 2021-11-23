@@ -1,3 +1,4 @@
+import { User } from '../../core/auth/interfaces/interfaces';
 export interface Product {
   id?: number;
   name: string;
@@ -10,7 +11,7 @@ export interface Product {
 
 export interface Category {
   id?: number;
-  name:string;
+  name: string;
   products?: Product[];
 }
 
@@ -24,4 +25,36 @@ export interface PhotoResponse {
   id?: number;
   name: string;
   product: Product;
+}
+
+export interface Pedido {
+  id?: number;
+  user: User;
+  products: PedidoProduct[];
+  createAt?: string;
+  updateAt?: string;
+}
+
+export interface PedidoProduct {
+  id?: number;
+  price: number;
+  name: string;
+  quantity: number;
+}
+
+export interface PedidoCreate {
+  id?: number;
+  pedidoId: number;
+  productId: number;
+  price: number;
+  quantity: number;
+  name: string;
+}
+
+export interface AddProductToPedido {
+  id?: number;
+  pedidoId: number;
+  productId: number[];
+  price: number[];
+  quantity: number[];
 }

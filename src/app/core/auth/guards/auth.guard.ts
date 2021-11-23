@@ -24,8 +24,14 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree
   {
-    const cookie = this.tokenService.checkToken();
-    if (!cookie) {
+    if (this.tokenService.getAuthenticate()) {
+      const cookie = JSON.parse(this.tokenService.getAuthenticate());
+      if (!cookie.authenticated) {
+        this.router.navigate(['./auth/login']);
+        return false;
+      }
+    } else {
+      this.router.navigate(['./auth/login']);
       return false;
     }
     return true;

@@ -31,7 +31,7 @@ export class ProductsFormComponent implements OnInit {
   photo!: FormGroup;
   edit = false;
   url = environment.urlBase;
-  photos!: Photo[];
+  photos: Photo[] = [];
 
   constructor(
     private fb: FormBuilder,

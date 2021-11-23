@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         confirmedValidator(),
       ]),
-      role: new FormControl(['admin'], [Validators.required]),
+      roles: new FormControl(['USUARIO'], [Validators.required]),
     });
   }
 

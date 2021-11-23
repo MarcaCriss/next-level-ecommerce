@@ -1,23 +1,28 @@
-<!-- Header -->
+
 <br /><br />
 <div class="container-title">
   <h1>Carrito de compras</h1>
-  <span class="count"
-    >{{ quantityProductsInCart$ | async }} productos en el carrito</span
-  >
+  <span class="count">
+    {{ quantityProductsInCart$ | async }} productos en el carrito
+  </span>
 </div>
-<!-- End Header -->
 
 <!-- Product List -->
-
 <div class="container" *ngFor="let product of cart$ | async">
-  <div class="thumbnail" *ngIf="product.photos">
-    <img
-      src="{{ url + 'photo/' + product.photos[0].name }}"
-      [alt]="product.name"
-    />
-  </div>
-
+  <ng-container *ngIf="product.photos">
+    <div class="thumbnail" *ngIf="product.photos.length > 0">
+      <img
+        src="{{ url + 'photo/' + product.photos[0].name }}"
+        [alt]="product.name"
+      />
+    </div>
+    <div class="thumbnail" *ngIf="product.photos.length === 0">
+      <img
+        src="assets/img/not-found.png"
+        [alt]="product.name"
+      />
+    </div>
+  </ng-container>
   <div class="detail">
     <div class="name mt-4">
       <h2>
@@ -29,13 +34,13 @@
       {{ product.description }}
       <hr>
       <div class="price">Precio unitario: {{ product.price }} Bs</div>
-      <div class="remove" (click)="removeCart(product)">
-        Eliminar este producto
-      </div>
+      <a class="remove" (click)="removeCart(product)">
+        <b>Eliminar este producto</b>
+      </a>
     </div>
     <br /><br>
     <div class="input-number">
-      <button type="button" (click)="decrement(product)">&minus;</button>
+        <button type="button" (click)="decrement(product)">&minus;</button>
       <span>
         <b>{{ product.stock }}</b>
       </span>
@@ -48,22 +53,21 @@
     <h1>{{ product.price * product.stock }} Bs</h1>
   </div>
 </div>
-<div *ngIf="!(quantityProductsInCart$ | async)" class="empty-product">
+<div *ngIf="!(quantityProductsInCart$ | async)" class="empty-product pb-5">
   <h3>No hay productos en tu carrito de compras</h3>
-  <button>Compra ahora!!</button>
+  <button [routerLink]="['/']">Compra ahora!!</button>
 </div>
-
 <!-- End Product List -->
 
-<!-- Summary -->
 
+<!-- Summary -->
 <section class="container d-flex justify-content-end" *ngIf="quantityProductsInCart$ | async">
   <div class="summary align-self-center justify-self-center">
     <h1 class="total text-center">
       Total: <span>{{ subtotalProductsInCart$ | async }} Bs</span>
     </h1>
     <div class="checkout">
-      <button type="button">Realizar Pedido</button>
+      <button type="button" (click)="openDialog()">Realizar Pedido</button>
     </div>
   </div>
 </section>

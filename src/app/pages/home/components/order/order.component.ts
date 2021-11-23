@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { CartService } from '../../../../shared/services/cart.service';
 import { Product } from '../../../../shared/interfaces/interfaces';
 import { environment } from './../../../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @Component({
   templateUrl: './order.component.html',
@@ -14,7 +16,7 @@ export class OrderComponent implements OnInit {
   subtotalProductsInCart$!: Observable<number>;
   url = environment.urlBase;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -36,5 +38,9 @@ export class OrderComponent implements OnInit {
 
   decrement(product: Product) {
     this.cartService.decrementQuantityProduct(product);
+  }
+
+  openDialog() {
+    this.dialog.open(CheckoutComponent);
   }
 }

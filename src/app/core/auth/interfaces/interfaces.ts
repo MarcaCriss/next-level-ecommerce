@@ -9,9 +9,11 @@ export interface Data {
 }
 
 export interface User {
-  role: string[];
+  id?: number;
+  roles: string[];
   last_name: string;
   name: string;
+  numero?: number;
   email: string;
   password: string;
 }

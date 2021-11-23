@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Data } from '../../interfaces/interfaces';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
@@ -34,10 +33,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //console.log(this.form.value);
     this.authService.login(this.form.value).subscribe((data: Data) => {
-      this.tokenService.saveToken(data.access_token);
-      this.router.navigate(['admin']);
+      if ( data.user.roles[0] ===  'ADMIN' ) {
+        this.tokenService.saveToken(data.access_token);
+        this.router.navigate(['/admin']);
+      } else {
+        this.tokenService.setAuthenticate(data.user.id!);
+        this.router.navigate(['/order']);
+      }
     });
   }
 

@@ -61,14 +61,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       if (data.length > 0) {
         data.map((photo) => {
           if (photo.id) {
-            this.photoService
-              .delete(photo.id)
-              .subscribe((data) => console.log('eliminado'));
+            this.photoService.delete(photo.id);
           }
         });
       }
       this.productsService.deleteProduct(id).subscribe((data) => {
-        console.log(data);
         this.getAllProducts();
       });
     });

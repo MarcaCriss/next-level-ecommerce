@@ -7,9 +7,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CookieService } from 'ngx-cookie-service';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 
 @NgModule({
-  declarations: [NavComponent, DashboardComponent, SidebarComponent],
+  declarations: [NavComponent, DashboardComponent, SidebarComponent, PedidosComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -1,15 +1,18 @@
+$btnbg: #666666;
+$btnbghover: #333333;
+
 a {
   text-decoration: none;
-  color: #333333;
+  color: red;
 }
 
 a:hover {
-  color: #f58551;
+  cursor: pointer;
 }
 
 button {
-  background-color: #16cc9b;
-  border: 2px solid #16cc9b;
+  background-color: $btnbg;
+  border: 1px solid black;
   color: #ffffff;
   transition: all 0.25s linear;
   cursor: pointer;
@@ -18,12 +21,10 @@ button {
 button::after {
   position: relative;
   right: 0;
-  transition: all 0.15s linear;
 }
 
 button:hover {
-  background-color: #f58551;
-  border-color: #f58551;
+  background-color: $btnbghover;
 }
 
 button:hover::after {
@@ -131,7 +132,7 @@ input {
   position: relative;
   width: 100px;
   height: 40px;
-  background-color: #6c6dff;
+  background-color: $btnbg ;
   overflow: hidden;
   border-radius: 20px;
   margin: 2px;
@@ -149,7 +150,7 @@ input {
   text-align: center;
   line-height: 40px;
   font-size: 16px;
-  color: #6c6dff;
+  color: #333333;
   letter-spacing: -1px;
 }
 
@@ -175,7 +176,7 @@ input {
 }
 
 .input-number button:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: $btnbghover;
 }
 
 /* --- SMALL SCREEN --- */

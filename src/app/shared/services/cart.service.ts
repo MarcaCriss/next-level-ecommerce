@@ -24,6 +24,11 @@ export class CartService {
     }
   }
 
+  resetCart() {
+    this.products = [];
+    this.cart.next(this.products);
+  }
+
   removeCart(product: Product) {
     const item = this.products.indexOf(product);
     if (item > -1) {
@@ -54,8 +59,10 @@ export class CartService {
       if (this.products[index].stock >= 1) {
         this.products[index].stock += 1;
       }
+      this.cart.next(this.products);
+    } else {
+      this.addCart(product);
     }
-    this.cart.next(this.products);
   }
 
   decrementQuantityProduct(product: Product) {

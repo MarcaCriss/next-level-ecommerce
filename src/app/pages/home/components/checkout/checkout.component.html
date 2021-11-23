@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Confirmar Pedido</h1>
+<span>Ingrese su numero de celular para poder contactarnos con usted</span>
+<hr />
+<form [formGroup]="form">
+  <div mat-dialog-content>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Numero de celular</mat-label>
+        <input matInput type="text" formControlName="numero" />
+        <mat-error *ngIf="getMinNumeroValido"
+          >El numero debe tener un minimo de 8 numeros</mat-error
+        >
+      </mat-form-field>
+    </mat-card-content>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      mat-dialog-close
+      [disabled]="form.invalid"
+      (click)="pedido()"
+    >
+      Confirmar pedido
+    </button>
+    <button mat-button mat-dialog-close>Cancelar confirmacion</button>
+  </div>
+</form>

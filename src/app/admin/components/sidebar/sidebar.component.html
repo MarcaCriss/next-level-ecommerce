@@ -22,6 +22,16 @@
     </mat-nav-list>
   </mat-expansion-panel>
 
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Pedidos </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['./pedidos']">Listar pedidos</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
   <mat-nav-list>
     <a mat-list-item (click)="logout()">Cerrar Sesion</a>
   </mat-nav-list>

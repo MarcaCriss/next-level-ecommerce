@@ -28,31 +28,27 @@
         Categoria: <b>#{{ product.category.name }}</b>
       </p>
       <hr />
-      <div class="d-grid gap-2 my-4">
+      <div class="d-grid gap-2 my-4 align-items-center">
         <div class="quantity d-flex items-align-center">
           <div class="col">
-            Cantidad &nbsp;&nbsp;
-            <input
-              type="number"
-              step="1"
-              min="1"
-              max="{{ product.stock }}"
-              name="quantity"
-              value="1"
-              title="Qty"
-              class="input-text qty text"
-              size="4"
-              (change)="quantity($event)"
-            />
+            <div class="input-number">
+              <button type="button" (click)="decrement(product)">
+                &minus;
+              </button>
+              <span>
+                <b>{{ product.stock >= 1 ? product.stock : '1' }}</b>
+              </span>
+              <button type="button" (click)="increment(product)">&#43;</button>
+            </div>
           </div>
-          <h1 class="col m-0 p-0">
+          <h1 class="col m-0 p-0 align-self-center">
             <b>{{ product.price }} Bs</b>
             <br />
           </h1>
         </div>
-        <a (click)="addCart(product)" class="btn btn-warning bold-btn mt-2">
+        <button (click)="addCart(product)" class="butt butt-warn bold-butt mt-2">
           Añadir al carrito
-        </a>
+        </button>
       </div>
     </div>
   </div>

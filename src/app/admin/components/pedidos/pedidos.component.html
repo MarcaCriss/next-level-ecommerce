@@ -1,0 +1,31 @@
+<div *ngFor="let pedido of pedidoByUser">
+  <div *ngFor="let pedidoUser of pedido" class="row">
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <h3 class="m-0">Pedido <b>#{{ pedidoUser.id }}</b></h3>
+      <span>{{ pedidoUser.createAt | date : 'MMM d - h:mm:ss a' }}</span>
+      <h3 class="m-0">Email: <b>{{ pedidoUser.user.email }}</b></h3>
+    </div>
+    <mat-card style="border: 1px solid blue">
+      <mat-card-content>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of pedidoUser.products">
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

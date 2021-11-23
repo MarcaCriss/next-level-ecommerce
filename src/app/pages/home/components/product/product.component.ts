@@ -35,8 +35,12 @@ export class ProductComponent implements OnInit {
     this.cartService.addCart(product);
   }
 
-  quantity(evt: any) {
-    console.log(evt);
+  increment(product: Product) {
+    this.cartService.incrementQuantityProduct(product);
+  }
+
+  decrement(product: Product) {
+    this.cartService.decrementQuantityProduct(product);
   }
 
 }

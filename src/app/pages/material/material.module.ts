@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const MaterialModules = [
   LayoutModule,
@@ -36,6 +38,8 @@ const MaterialModules = [
   MatExpansionModule,
   MatSelectModule,
   MatBadgeModule,
+  MatSnackBarModule,
+  MatDialogModule,
 ];
 
 @NgModule({
