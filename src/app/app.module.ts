@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { JwtInterceptor } from './core/auth/interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './core/auth/interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastNotificationsModule } from 'ngx-toast-notifications';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ToastNotificationsModule.forRoot()
   ],
   providers: [
     {

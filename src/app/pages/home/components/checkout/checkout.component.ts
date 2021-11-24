@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../shared/services/user.service';
 import { TokenService } from '../../../../core/auth/services/token.service';
 import { CartService } from '../../../../shared/services/cart.service';
 import { PedidoService } from '../../../../shared/services/pedido.service';
 import { User } from '../../../../core/auth/interfaces/interfaces';
-import { Product, PedidoCreate } from '../../../../shared/interfaces/interfaces';
+import {
+  Product,
+  PedidoCreate,
+} from '../../../../shared/interfaces/interfaces';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   cart: Product[] = [];
+  user!: User;
+  show!: boolean;
+  private onDestroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -26,49 +34,83 @@ export class CheckoutComponent implements OnInit {
     private tokenService: TokenService,
     private cartService: CartService,
     private pedidoService: PedidoService,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
-    this.cartService.cart$.subscribe(
-      (data) => {
-        this.cart = data;
-      }
+    this.cartService.cart$
+    .pipe(
+      takeUntil(this.onDestroy$)
     )
+    .subscribe((data: any) => {
+      this.cart = data;
+    });
     this.form = this.fb.group({
-      numero: new FormControl('', [
+      numero: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
       ]),
     });
+    this.getUser();
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   pedido() {
-    const user = JSON.parse(this.tokenService.getAuthenticate());
-    this.userService.getUser(user.id).subscribe(
-      (data: User) => {
-        this.pedidoService.createPedido(data.id!).subscribe(
-          (data) => {
-            this.cart.map(
-              (product) => {
-                const pedido: PedidoCreate = {
-                  pedidoId: data.id,
-                  price: product.price,
-                  quantity: product.stock,
-                  productId: product.id!,
-                  name: product.name
-                }
-                this.pedidoService.addProductPedido(pedido);
-              }
-            );
-            this.cartService.resetCart();
-          }
+    this.pedidoService.createPedido(this.user.id!)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((data: any) => {
+      this.cart.map((product) => {
+        const pedido: PedidoCreate = {
+          pedidoId: data.id,
+          price: product.price,
+          quantity: product.stock,
+          productId: product.id!,
+          name: product.name,
+        };
+        this.pedidoService.addProductPedido(pedido)
+        .pipe(
+          takeUntil(this.onDestroy$)
         )
+        .subscribe((data: any) => {});
+      });
+      this.userService.updateNumberUser(this.user.id!, this.form.get('numero')?.value)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe(() => {})
+      this.cartService.resetCart();
+      this.toast.success('Pedido Realizado Exitosamente');
+    });
+  }
+
+  getUser() {
+    const user = JSON.parse(this.tokenService.getAuthenticate());
+    this.userService.getUser(user.id)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((user: User) => {
+      this.user = user;
+      if (user.numero !== null) {
+        this.form.get('numero')?.setValue(user.numero);
+        this.show = false;
+      } else {
+        this.show = true;
       }
-    );
+    });
   }
 
   getNumeroValido() {
-    return this.form.get('numero')?.errors?.['required'] && this.form.get('numero')?.touched;
+    return (
+      this.form.get('numero')?.errors?.['required'] &&
+      this.form.get('numero')?.touched
+    );
   }
 
   getMinNumeroValido() {

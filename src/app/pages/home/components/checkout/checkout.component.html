@@ -1,9 +1,13 @@
 <h1 mat-dialog-title>Confirmar Pedido</h1>
-<span>Ingrese su numero de celular para poder contactarnos con usted</span>
+<span *ngIf="show">
+  Ingrese su numero de celular para poder contactarnos
+  <br>
+  con usted. (Este numero sera usado para futuros pedidos 🙂)
+</span>
 <hr />
 <form [formGroup]="form">
   <div mat-dialog-content>
-    <mat-card-content>
+    <mat-card-content *ngIf="show">
       <mat-form-field>
         <mat-label>Numero de celular</mat-label>
         <input matInput type="text" formControlName="numero" />

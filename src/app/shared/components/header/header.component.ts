@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { Category } from '../../interfaces/interfaces';
 import { CategoriesService } from './../../services/categories.service';
 import { CartService } from '../../services/cart.service';
@@ -9,9 +9,10 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   categories!: Category[];
   total$!: Observable<number>;
+  onDestroy$ = new Subject<void>();
 
   constructor(
     private categoriesService: CategoriesService,
@@ -19,7 +20,11 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoriesService.getAllCategories().subscribe((data) => {
+    this.categoriesService.getAllCategories()
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((data) => {
       this.categories = data;
     });
     this.total$ = this.cartService.cart$.pipe(
@@ -29,6 +34,11 @@ export class HeaderComponent implements OnInit {
         return count;
       })
     );
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
 }

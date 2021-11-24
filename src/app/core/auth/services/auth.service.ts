@@ -16,12 +16,20 @@ export class AuthService {
     return this._http.post<Data>(`${environment.urlBase}auth/login`, data);
   }
 
+  logout() {
+    this.tokenService.removeToken();
+  }
+
   register(data: User) {
-    return this._http.post(`${environment.urlBase}v1/user/create`, data);
+    return this._http.post(`${environment.urlBase}user/create`, data);
   }
 
   isAuthenticated(): boolean {
     return Boolean(this.tokenService.getToken());
+  }
+
+  refreshToken() {
+    return this._http.get(`${environment.urlBase}auth/refresh`);
   }
 
 }

@@ -11,10 +11,14 @@ export class UserService {
   constructor(private _http: HttpClient) {}
 
   getUser(id: number) {
-    return this._http.get<User>(`${environment.urlBase}user/${id}`)
+    return this._http.get<User>(`${environment.urlBase}user/${id}`);
   }
 
   getAllUser(): Observable<User[]> {
-    return this._http.get<User[]>(`${environment.urlBase}user`)
+    return this._http.get<User[]>(`${environment.urlBase}user`);
+  }
+
+  updateNumberUser(id: number, data: number) {
+    return this._http.put(`${environment.urlBase}user/${id}/numero`, { numero: data });
   }
 }

@@ -4,12 +4,15 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { TokenService } from '../services/token.service';
+import { AuthService } from '../services/auth.service';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService) {}
@@ -23,9 +26,9 @@ export class JwtInterceptor implements HttpInterceptor {
     if (token) {
       req = request.clone({
         setHeaders: {
-          authorization: `Bearer ${token}`
-        }
-      })
+          authorization: `Bearer ${token}`,
+        },
+      });
     }
     return next.handle(req);
   }

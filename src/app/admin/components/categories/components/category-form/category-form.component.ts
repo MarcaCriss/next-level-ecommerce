@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,17 +9,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { CategoriesService } from './../../../../../shared/services/categories.service';
 import { Category } from '../../../../../shared/interfaces/interfaces';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.scss'],
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent implements OnInit, OnDestroy {
   id: string | null;
   titleForm = 'Crear categoria nueva';
   buttonForm = 'Guardar';
   form!: FormGroup;
+  onDestroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -35,9 +37,17 @@ export class CategoryFormComponent implements OnInit {
     this.formGroupCategory();
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   createCategory() {
     this.categoriesService
       .createCategory(this.form.value)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
       .subscribe((category: Category) => {
         this.router.navigate(['./admin/categories']);
       });
@@ -46,6 +56,9 @@ export class CategoryFormComponent implements OnInit {
   updateCategory(id: string) {
     this.categoriesService
       .updateCategory(parseInt(id), this.form.value)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
       .subscribe((data) => {
         this.router.navigate(['./admin/categories']);
       });
@@ -57,6 +70,9 @@ export class CategoryFormComponent implements OnInit {
       this.buttonForm = 'Actualizar';
       this.categoriesService
         .getCategory(parseInt(this.id))
+        .pipe(
+          takeUntil(this.onDestroy$)
+        )
         .subscribe((category: Category) => {
           this.form.setValue({
             name: category.name,

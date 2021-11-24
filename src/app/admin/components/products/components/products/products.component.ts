@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,13 +9,14 @@ import { Product } from "../../../../../shared/interfaces/interfaces";
 import { ProductsService } from '../../../../../shared/services/products.service';
 import { PhotoService } from '../../../../../shared/services/photo.service';
 import { environment } from '../../../../../../environments/environment.prod';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'name',
@@ -27,6 +28,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ];
   dataSource = new MatTableDataSource<Product>();
   url = environment.urlBase;
+  onDestroy$ = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,9 +48,17 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   getAllProducts() {
     this.productsService
       .getAllProducts()
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
       .subscribe((products: Product[]) => (this.dataSource.data = products));
   }
 
@@ -57,7 +67,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct(id: number) {
-    this.photoService.getProductsOfPhoto(id).subscribe((data: Photo[]) => {
+    this.photoService.getProductsOfPhoto(id)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((data: Photo[]) => {
       if (data.length > 0) {
         data.map((photo) => {
           if (photo.id) {
@@ -65,7 +79,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           }
         });
       }
-      this.productsService.deleteProduct(id).subscribe((data) => {
+      this.productsService.deleteProduct(id)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe((data) => {
         this.getAllProducts();
       });
     });

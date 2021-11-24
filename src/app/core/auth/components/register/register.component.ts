@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { confirmedValidator } from './password-confirmed.validator';
 import { strengthPassword } from './password-strength.validator';
@@ -15,9 +16,10 @@ import { strengthPassword } from './password-strength.validator';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   hide = true;
+  onDestroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -43,8 +45,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   register() {
-    this.authService.register(this.form.value).subscribe((data) => {
+    this.authService.register(this.form.value)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((data: any) => {
       this.router.navigate(['./auth/login']);
     });
   }

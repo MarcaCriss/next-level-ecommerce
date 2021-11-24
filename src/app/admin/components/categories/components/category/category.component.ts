@@ -1,19 +1,21 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Category } from '../../../../../shared/interfaces/interfaces';
 import { CategoriesService } from './../../../../../shared/services/categories.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'acciones'];
   dataSource = new MatTableDataSource<Category>();
+  private onDestroy$ = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,8 +34,17 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   getAllCategories() {
-    this.categoriesService.getAllCategories().subscribe(
+    this.categoriesService.getAllCategories()
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe(
       (data: Category[]) => this.dataSource.data = data
     )
   }
@@ -43,7 +54,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   deleteCategories(id: number) {
-    this.categoriesService.deleteCategory(id).subscribe(
+    this.categoriesService.deleteCategory(id)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe(
       (data) => {
         this.getAllCategories()
       }

@@ -5,6 +5,7 @@ import { Product } from '../../../../shared/interfaces/interfaces';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CartService } from '../../../../shared/services/cart.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   templateUrl: './product.component.html',
@@ -18,7 +19,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
-    private cartService: CartService
+    private cartService: CartService,
+    private toast: ToastService
   ) {
     this.id = this.activatedRoute.snapshot.paramMap.get('id')!;
   }
@@ -33,6 +35,7 @@ export class ProductComponent implements OnInit {
 
   addCart(product: Product) {
     this.cartService.addCart(product);
+    this.toast.success('Producto añadido al carrito')
   }
 
   increment(product: Product) {

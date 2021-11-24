@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 
 import { ProductsService } from '../../../../../shared/services/products.service';
@@ -22,7 +22,7 @@ import { environment } from '../../../../../../environments/environment';
   templateUrl: './products-form.component.html',
   styleUrls: ['./products-form.component.scss'],
 })
-export class ProductsFormComponent implements OnInit {
+export class ProductsFormComponent implements OnInit, OnDestroy {
   id: string | null;
   titleForm = 'Crear producto nuevo';
   buttonForm = 'Guardar';
@@ -32,6 +32,7 @@ export class ProductsFormComponent implements OnInit {
   edit = false;
   url = environment.urlBase;
   photos: Photo[] = [];
+  onDestroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -54,10 +55,19 @@ export class ProductsFormComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   uploadFile(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.photoService.uploadFile(file).subscribe(
+      this.photoService.uploadFile(file)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe(
         (data: any) => {
           this.photos.push({ name: data.filename});
           this.photo.get('name')?.setValue(data.filename);
@@ -69,9 +79,17 @@ export class ProductsFormComponent implements OnInit {
   createProduct() {
     this.productsService
       .createProduct(this.form.value)
-      .subscribe((product: Product) => {
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe(
+        (product: Product) => {
         this.photo.get('productId')?.setValue(product.id);
-        this.photoService.create(this.photo.value).subscribe(
+        this.photoService.create(this.photo.value)
+        .pipe(
+          takeUntil(this.onDestroy$)
+        )
+        .subscribe(
           (data) => {
             this.router.navigate(['./admin/products']);
           }
@@ -80,10 +98,18 @@ export class ProductsFormComponent implements OnInit {
   }
 
   updateProduct(id: string) {
-    this.productsService.updateProduct(parseInt(id), this.form.value).subscribe(
+    this.productsService.updateProduct(parseInt(id), this.form.value)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe(
       (data) => {
         this.photo.get('productId')?.setValue(parseInt(id));
-        this.photoService.create(this.photo.value).subscribe(
+        this.photoService.create(this.photo.value)
+        .pipe(
+          takeUntil(this.onDestroy$)
+        )
+        .subscribe(
           (data) => {
             this.router.navigate(['./admin/products']);
           }
@@ -99,7 +125,11 @@ export class ProductsFormComponent implements OnInit {
       this.buttonForm = 'Actualizar';
       this.productsService
         .getProduct(parseInt(this.id))
-        .subscribe((product: Product) => {
+        .pipe(
+          takeUntil(this.onDestroy$)
+        )
+        .subscribe(
+          (product: Product) => {
           this.photos = product.photos!;
           this.form.setValue({
             name: product.name,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Data } from '../../interfaces/interfaces';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
@@ -15,8 +16,9 @@ import { TokenService } from '../../services/token.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
+  onDestroy$ = new Subject<void>();
 
   constructor(
     private authService: AuthService,
@@ -32,8 +34,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   login() {
-    this.authService.login(this.form.value).subscribe((data: Data) => {
+    this.authService.login(this.form.value)
+    .pipe(
+      takeUntil(this.onDestroy$)
+    )
+    .subscribe((data: Data) => {
       if ( data.user.roles[0] ===  'ADMIN' ) {
         this.tokenService.saveToken(data.access_token);
         this.router.navigate(['/admin']);
