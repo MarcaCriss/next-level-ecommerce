@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlBase: 'http://localhost:3000/'
+  urlBase: 'https://dry-sea-25919.herokuapp.com/'
 };
 
 /*
