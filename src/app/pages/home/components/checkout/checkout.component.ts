@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -34,7 +35,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private cartService: CartService,
     private pedidoService: PedidoService,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +87,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {})
       this.cartService.resetCart();
-      this.toast.success('Pedido Realizado Exitosamente');
+      this.toast.success('Pedido Realizado Exitosamente', 'success');
+      this.router.navigate(['/']);
     });
   }
 

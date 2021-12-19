@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastNotificationsModule } from 'ngx-toast-notifications';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './core/auth/interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './core/auth/interceptors/loading.interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { ToastNotificationsModule } from 'ngx-toast-notifications';
 
 @NgModule({
   declarations: [

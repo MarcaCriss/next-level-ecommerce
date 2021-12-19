@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CartService } from '../../../../shared/services/cart.service';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   templateUrl: './product.component.html',
@@ -30,7 +31,12 @@ export class ProductComponent implements OnInit {
   }
 
   getProduct() {
-    this.product$ = this.productsService.getProduct(parseInt(this.id))
+    this.product$ = this.productsService.getProduct(parseInt(this.id)).pipe(
+      map((product: Product) => {
+        product.stock = 1;
+        return product;
+      })
+    );
   }
 
   addCart(product: Product) {
@@ -40,6 +46,7 @@ export class ProductComponent implements OnInit {
 
   increment(product: Product) {
     this.cartService.incrementQuantityProduct(product);
+    this.toast.success('Producto añadido al carrito')
   }
 
   decrement(product: Product) {
