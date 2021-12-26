@@ -67,7 +67,6 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
         .uploadFile(file)
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: ResponseAWS) => {
-          console.log(data);
           if (this.id !== null) {
             this.photos.push({ name: data.key, url: data.Location });
           } else {
