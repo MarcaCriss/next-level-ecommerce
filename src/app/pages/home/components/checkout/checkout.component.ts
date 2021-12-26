@@ -93,8 +93,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getUser() {
-    const user = JSON.parse(this.tokenService.getAuthenticate());
-    this.userService.getUser(user.id)
+    const userToken = JSON.parse(this.tokenService.getAuthenticate());
+    this.userService.getUser(userToken.id)
     .pipe(
       takeUntil(this.onDestroy$)
     )
