@@ -5,7 +5,7 @@
         <input type="radio" name="a" id="cr-{{ photo.id }}" checked />
         <label for="cr-{{ photo.id }}" style="--hue: 32"></label>
         <div class="ci" style="--z: 4">
-          <img src="{{ url + 'photo/' + photo.name }}" alt="Snow on leafs" />
+          <img [src]="photo.url" [alt]="photo.name" />
         </div>
       </ng-container>
     </div>

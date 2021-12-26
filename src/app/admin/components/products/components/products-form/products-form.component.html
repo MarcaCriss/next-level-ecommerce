@@ -39,15 +39,26 @@
         <br />
         <img
           class="image-thumb"
-          src="{{ url + 'photo/' + photo.get('name')?.value }}"
+          [src]="photos[0].url"
           alt="imagen"
-          *ngIf="photo.get('name')?.value"
+          *ngIf="photo.get('name')?.value && id === null"
+        />
+        <img
+          class="image-thumb"
+          [src]="photos[photos.length - 1].url"
+          alt="imagen"
+          *ngIf="photo.get('name')?.value && id !== null"
         />
         <input
           type="file"
+          id="image"
+          style="display:none;"
           (change)="uploadFile($event)"
           [disabled]="form.invalid"
         />
+        <button type="button" (click)="inputFile()" mat-stroked-button color="primary" [disabled]="form.invalid">
+          Añadir imagen
+        </button>
         <br />
       </mat-card-content>
       <mat-card-actions>
@@ -63,9 +74,9 @@
   <div class="container-img" *ngIf="id !== null">
     <img
       *ngFor="let photo of photos"
-      src="{{ url + 'photo/' + photo.name }}"
+      [src]="photo.url"
       class="container-img__image"
-      alt="image {{ photo.id }}"
+      [alt]="photo.name"
     />
   </div>
 </div>

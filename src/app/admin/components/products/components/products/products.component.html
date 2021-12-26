@@ -40,7 +40,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Imagen</th>
       <td mat-cell *matCellDef="let row">
         <img
-          src="{{ url + 'photo/' + row.photos[0].name }}"
+          [src]="row.photos[row.photos.length - 1].url"
           class="img-product"
           [alt]="row.photos.name"
           *ngIf="row.photos.length > 0"

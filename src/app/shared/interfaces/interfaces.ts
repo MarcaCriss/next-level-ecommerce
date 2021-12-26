@@ -18,6 +18,7 @@ export interface Category {
 export interface Photo {
   id?: number;
   name: string;
+  url: string;
   productId?: Product;
 }
 
@@ -57,4 +58,12 @@ export interface AddProductToPedido {
   productId: number[];
   price: number[];
   quantity: number[];
+}
+
+export interface ResponseAWS {
+  Bucket: string
+  ETag: string
+  Key: string
+  Location: string
+  key: string
 }

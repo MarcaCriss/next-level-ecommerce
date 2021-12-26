@@ -67,26 +67,26 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteProduct(id: number) {
-    this.photoService.getProductsOfPhoto(id)
-    .pipe(
-      takeUntil(this.onDestroy$)
-    )
-    .subscribe((data: Photo[]) => {
-      if (data.length > 0) {
-        data.map((photo) => {
-          if (photo.id) {
-            this.photoService.delete(photo.id);
-          }
-        });
-      }
-      this.productsService.deleteProduct(id)
-      .pipe(
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe((data) => {
-        this.getAllProducts();
-      });
-    });
+    // this.photoService.getProductsOfPhoto(id)
+    // .pipe(
+    //   takeUntil(this.onDestroy$)
+    // )
+    // .subscribe((data: Photo[]) => {
+    //   if (data.length > 0) {
+    //     data.map((photo) => {
+    //       if (photo.id) {
+    //         this.photoService.delete(photo.id);
+    //       }
+    //     });
+    //   }
+    //   this.productsService.deleteProduct(id)
+    //   .pipe(
+    //     takeUntil(this.onDestroy$)
+    //   )
+    //   .subscribe((data) => {
+    //     this.getAllProducts();
+    //   });
+    // });
   }
 
   applyFilter(event: Event) {

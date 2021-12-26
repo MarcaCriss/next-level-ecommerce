@@ -9,10 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, Subject, takeUntil } from 'rxjs';
 
-
 import { ProductsService } from '../../../../../shared/services/products.service';
-import { Category, Photo } from '../../../../../shared/interfaces/interfaces';
-import { Product } from "../../../../../shared/interfaces/interfaces";
+import {
+  Category,
+  Photo,
+  ResponseAWS,
+} from '../../../../../shared/interfaces/interfaces';
+import { Product } from '../../../../../shared/interfaces/interfaces';
 import { CategoriesService } from './../../../../../shared/services/categories.service';
 import { PhotoService } from '../../../../../shared/services/photo.service';
 import { environment } from '../../../../../../environments/environment';
@@ -40,7 +43,7 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     private photoService: PhotoService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -48,11 +51,8 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isEdit();
     this.getAllCategories();
-    this.formGroupProduct();
-    this.photo = this.fb.group({
-      name: new FormControl(''),
-      productId: new FormControl(null)
-    });
+    this.builderFormOfProduct();
+    this.builderFormOfPhoto();
   }
 
   ngOnDestroy() {
@@ -63,59 +63,50 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   uploadFile(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.photoService.uploadFile(file)
-      .pipe(
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe(
-        (data: any) => {
-          this.photos.push({ name: data.filename});
-          this.photo.get('name')?.setValue(data.filename);
-        }
-      )
+      this.photoService
+        .uploadFile(file)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((data: ResponseAWS) => {
+          if (this.id !== null) {
+            this.photos.push({ name: data.key, url: data.Location });
+          } else {
+            this.photos = [];
+            this.photos.push({ name: data.key, url: data.Location });
+          }
+          this.photo.get('name')?.setValue(data.key);
+          this.photo.get('url')?.setValue(data.Location);
+        });
     }
   }
 
   createProduct() {
     this.productsService
       .createProduct(this.form.value)
-      .pipe(
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe(
-        (product: Product) => {
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((product: Product) => {
         this.photo.get('productId')?.setValue(product.id);
-        this.photoService.create(this.photo.value)
-        .pipe(
-          takeUntil(this.onDestroy$)
-        )
-        .subscribe(
-          (data) => {
+        this.photoService
+          .createPhoto(this.photo.value)
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((data) => {
             this.router.navigate(['./admin/products']);
-          }
-        )
+          });
       });
   }
 
   updateProduct(id: string) {
-    this.productsService.updateProduct(parseInt(id), this.form.value)
-    .pipe(
-      takeUntil(this.onDestroy$)
-    )
-    .subscribe(
-      (data) => {
+    this.productsService
+      .updateProduct(parseInt(id), this.form.value)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data) => {
         this.photo.get('productId')?.setValue(parseInt(id));
-        this.photoService.create(this.photo.value)
-        .pipe(
-          takeUntil(this.onDestroy$)
-        )
-        .subscribe(
-          (data) => {
+        this.photoService
+          .createPhoto(this.photo.value)
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe((data) => {
             this.router.navigate(['./admin/products']);
-          }
-        )
-      }
-    )
+          });
+      });
   }
 
   isEdit() {
@@ -125,18 +116,15 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       this.buttonForm = 'Actualizar';
       this.productsService
         .getProduct(parseInt(this.id))
-        .pipe(
-          takeUntil(this.onDestroy$)
-        )
-        .subscribe(
-          (product: Product) => {
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((product: Product) => {
           this.photos = product.photos!;
           this.form.setValue({
             name: product.name,
             description: product.description,
             price: product.price,
             stock: product.stock,
-            category: product.category.id,
+            category: product.category.id, 
           });
         });
     }
@@ -150,17 +138,29 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     this.router.navigate(['./admin/products']);
   }
 
-  formGroupProduct() {
+  builderFormOfProduct() {
     this.form = this.fb.group({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      price: new FormControl(null, [Validators.required]),
-      stock: new FormControl(null, [Validators.required]),
-      category: new FormControl('', Validators.required),
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      price: [null, [Validators.required]],
+      stock: [null, [Validators.required]],
+      category: ['', [Validators.required]],
+    });
+  }
+
+  builderFormOfPhoto() {
+    this.photo = this.fb.group({
+      name: ['', Validators.required],
+      url: ['', Validators.required],
+      productId: [null, Validators.required],
     });
   }
 
   getAllCategories() {
     this.categories$ = this.categoriesService.getAllCategories();
+  }
+
+  inputFile() {
+    document.getElementById('image')?.click();
   }
 }

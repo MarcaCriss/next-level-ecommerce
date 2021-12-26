@@ -7,7 +7,7 @@
         <a *ngIf="product.photos" [routerLink]="['/product', product.id]">
           <img
             *ngIf="product.photos.length > 0"
-            src="{{ url + 'photo/' + product.photos[0].name }}"
+            [src]="product.photos[0].url"
             class="card-img-top"
             [alt]="product.name"
           />
