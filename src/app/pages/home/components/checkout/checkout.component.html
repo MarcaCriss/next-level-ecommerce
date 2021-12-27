@@ -23,10 +23,9 @@
       color="primary"
       mat-dialog-close
       [disabled]="form.invalid"
-      (click)="pedido()"
     >
       Confirmar pedido
     </button>
-    <button mat-button mat-dialog-close>Cancelar confirmacion</button>
+    <button mat-button (click)="cerrar()">Cancelar confirmacion</button>
   </div>
 </form>

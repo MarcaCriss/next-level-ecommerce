@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ export class PedidoService {
   }
 
   createPedido(id: number): Observable<any> {
-    return this._http.post<any>(`${environment.urlBase}pedidos`, {user: id});
+    return this._http.post<any>(`${environment.urlBase}pedidos`, { user: id });
   }
 
   addProductPedido(pedido: PedidoCreate) {
