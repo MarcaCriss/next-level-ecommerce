@@ -28,6 +28,6 @@ export class ProductsService {
   }
 
   deleteProduct(id: number) {
-    return this._http.delete(`${environment.urlBase}products/${id}`);
+    return this._http.put(`${environment.urlBase}products/${id}`, { status: false });
   }
 }

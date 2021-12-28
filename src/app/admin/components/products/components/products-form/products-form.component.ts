@@ -26,7 +26,7 @@ import { environment } from '../../../../../../environments/environment';
   styleUrls: ['./products-form.component.scss'],
 })
 export class ProductsFormComponent implements OnInit, OnDestroy {
-  id: string | null;
+  id: string | null = null;
   titleForm = 'Crear producto nuevo';
   buttonForm = 'Guardar';
   form!: FormGroup;
@@ -84,13 +84,14 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       .createProduct(this.form.value)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((product: Product) => {
-        this.photo.get('productId')?.setValue(product.id);
-        this.photoService
-          .createPhoto(this.photo.value)
-          .pipe(takeUntil(this.onDestroy$))
-          .subscribe((data) => {
-            this.router.navigate(['./admin/products']);
+        if (this.photo.get('url')!.value !== '') {
+          this.photo.get('productId')?.setValue(product.id);
+          this.photoService.createPhoto(this.photo.value)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((data) => {
           });
+        }
+        this.router.navigate(['./admin/products']);
       });
   }
 
@@ -99,13 +100,16 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       .updateProduct(parseInt(id), this.form.value)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data) => {
-        this.photo.get('productId')?.setValue(parseInt(id));
-        this.photoService
-          .createPhoto(this.photo.value)
-          .pipe(takeUntil(this.onDestroy$))
-          .subscribe((data) => {
-            this.router.navigate(['./admin/products']);
-          });
+        console.log(data);
+        if (this.photo.get('url')!.value !== '') {
+          this.photo.get('productId')?.setValue(parseInt(id));
+          console.log(this.photo.value);
+          this.photoService.createPhoto(this.photo.value)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((data) => {
+            });
+        }
+        this.router.navigate(['./admin/products']);
       });
   }
 
@@ -118,13 +122,15 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
         .getProduct(parseInt(this.id))
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((product: Product) => {
-          this.photos = product.photos!;
+          if ( product.photos?.length! > 0 ) {
+            this.photos = product.photos!;
+          }
           this.form.setValue({
             name: product.name,
             description: product.description,
             price: product.price,
             stock: product.stock,
-            category: product.category.id, 
+            category: product.category.id,
           });
         });
     }
